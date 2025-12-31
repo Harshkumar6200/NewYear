@@ -3,56 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Year Math Challenge</title>
+    <title>2026 Math Magic</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; padding-top: 50px; }
-        .container { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; }
-        input { padding: 10px; font-size: 18px; width: 100px; text-align: center; }
-        button { padding: 10px 20px; font-size: 18px; background-color: #27ae60; color: white; border: none; cursor: pointer; border-radius: 5px; }
-        button:hover { background-color: #2ecc71; }
-        #message { margin-top: 20px; font-size: 24px; font-weight: bold; }
+        /* Modern Vibrant Background */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism Card Effect */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        h1 { font-size: 2rem; margin-bottom: 10px; color: #ffcc00; }
+        p { font-size: 1.1rem; opacity: 0.9; }
+
+        #math-problem {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        input {
+            padding: 15px;
+            font-size: 1.5rem;
+            width: 150px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #ffcc00;
+            color: #1e3c72;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+        }
+
+        button:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* Celebration Full-Screen Overlay */
+        #celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #ff0055, #000000);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .wish-text {
+            font-size: 5rem;
+            font-weight: 900;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-20px); } }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>New Year Math Challenge</h1>
-        <p>Solve this to unlock your wish:</p>
-        <div id="math-problem" style="font-size: 30px; margin-bottom: 20px;"></div>
-        <input type="number" id="user-answer" placeholder="?">
-        <br><br>
-        <button onclick="checkAnswer()">Submit Answer</button>
-        <div id="message"></div>
+    <div class="container" id="game-box">
+        <h1>✨ 2026 Challenge ✨</h1>
+        <p>Calculate the sum to enter the new year:</p>
+        <div id="math-problem"></div>
+        <input type="number" id="user-answer" placeholder="Sum" autofocus>
+        <br>
+        <button onclick="checkAnswer()">Unlock 2026 🔓</button>
+    </div>
+
+    <div id="celebration">
+        <div class="wish-text">🎆 HAPPY NEW YEAR 🎆<br>2026</div>
+        <button onclick="location.reload()" style="background: white; color: black; margin-top: 50px;">Play Again</button>
     </div>
 
     <script>
         let num1, num2, correctAnswer;
 
         function generateNumbers() {
-            // Generates random numbers between 1 and 999
-            num1 = Math.floor(Math.random() * 999) + 1;
-            num2 = Math.floor(Math.random() * 999) + 1;
+            // Generates two random numbers (1-3 digits)
+            num1 = Math.floor(Math.random() * 900) + 10; 
+            num2 = Math.floor(Math.random() * 900) + 10;
             correctAnswer = num1 + num2;
-            document.getElementById('math-problem').innerText = `${num1} + ${num2} = ?`;
+            document.getElementById('math-problem').innerText = `${num1} + ${num2}`;
             document.getElementById('user-answer').value = '';
-            document.getElementById('message').innerText = '';
         }
 
         function checkAnswer() {
             const userAnswer = parseInt(document.getElementById('user-answer').value);
-            const messageElement = document.getElementById('message');
-
+            
             if (userAnswer === correctAnswer) {
-                messageElement.style.color = "#d35400";
-                messageElement.innerText = "🎉 Happy New Year 2026! 🎊";
+                // Hide game, show celebration
+                document.getElementById('game-box').style.display = 'none';
+                document.getElementById('celebration').style.display = 'flex';
             } else {
-                alert("Wrong answer! The game will restart.");
+                alert("❌ Wrong Sum! Try again.");
                 generateNumbers();
             }
         }
 
-        // Start the game on load
+        // Initialize game
         generateNumbers();
     </script>
 </body>
